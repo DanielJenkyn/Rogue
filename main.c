@@ -3,10 +3,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-typedef struct Room
-{
-    int xPos;
-    int yPos;
+typedef  struct Position {
+    int x;
+    int y;
+
+    
+}Position;
+
+typedef struct Room {
+    Position position;
     int height;
     int width;
     //Monster ** monsters //Array of pointers to montsters
@@ -14,11 +19,10 @@ typedef struct Room
     
 }Room;
 
-typedef struct Player
-{
-    int xPos;
-    int yPos;
+typedef struct Player {
+    Position position;
     int health;
+    //Room *room;
 }Player;
 
 int screenSetUp();
@@ -30,7 +34,7 @@ int playerMove(int, int, Player *user);
 
 //Room functions
 Room *createRoom(int y, int x, int height, int width);
-int drawRoom(Room *room)
+int drawRoom(Room *room);
 
 int main() {
     Player *user;
@@ -65,16 +69,9 @@ Room **mapSetUp() {
     */
     Room **rooms;
     //Allocates no of bytes for object type Room * 6, enough for 6 rooms
-    rooms[0] = malloc(sizeof(Room)*6)
-    createRoom(13, 13,6,8);
-    drawRoom(room[0]);
-
-	mvprintw(13,13, "+-----+");
-    mvprintw(14,13, "|.....|");
-    mvprintw(15,13, "|.....|");
-    mvprintw(16,13, "|.....|");
-    mvprintw(17,13, "|.....|");
-    mvprintw(18,13, "+-----+");
+    rooms = malloc(sizeof(Room)*6);
+    rooms[0] = createRoom(13,13,6,8);
+    drawRoom(rooms[0]);
 
     return rooms;
 
@@ -85,8 +82,8 @@ Room *createRoom(int y, int x, int height, int width) {
     Room *newRoom;
     newRoom = malloc(sizeof(Room));
 
-    newRoom->xPos = x;
-    newRoom->yPos = y;
+    newRoom->position.x = x;
+    newRoom->position.y = y;
     newRoom->height = height;
     newRoom->width = width;
 
@@ -95,18 +92,42 @@ Room *createRoom(int y, int x, int height, int width) {
 }
 
 int drawRoom(Room *room) {
+    int x;
+    int y;
 
+    //Draw corners
+    mvprintw(room->position.y, room->position.x, "+");
+    mvprintw(room->position.y, room->position.x + room->width - 1, "+");
+    mvprintw(room->position.y + room->height - 1, room->position.x, "+");
+    mvprintw(room->position.y + room->height - 1,room->position.x + room->width - 1, "+");
+    //Draw top and bottom
+    for(x = room->position.x + 1; x < room->position.x + room->width - 1; x++) {
+        mvprintw(room->position.y, x, "-"); //Top
+        mvprintw(room->position.y + room->height - 1, x, "-"); //bottom
+    }
+
+    //Draw floor and walls(side)
+    for(y = room->position.y + 1; y < room->position.y + room->height - 1;y++) {
+        mvprintw(y, room->position.x, "|");
+        mvprintw(y, room->position.x + room->width - 1, "|");
+        //Draw floor
+        for(x = room->position.x + 1; x<room->position.x + room->width - 1; x++) {
+            mvprintw(y,x,".");
+        }
+    }
+
+    return 1;
 }
 
 Player *playerSetUp() {
     Player *newPlayer;
     newPlayer = malloc(sizeof(Player));
 
-    newPlayer->xPos = 14;
-    newPlayer->yPos = 14;
+    newPlayer->position.x = 14;
+    newPlayer->position.y = 14;
     newPlayer->health = 20;
 
-    playerMove(newPlayer->yPos, newPlayer->xPos, newPlayer);
+    playerMove(newPlayer->position.y, newPlayer->position.x, newPlayer);
 
     return newPlayer;
 }
@@ -117,20 +138,20 @@ int handleInput(int input, Player *user) {
     int newX;
     switch(tolower(input)) {
         case 'w':
-            newY = user-> yPos -1;
-            newX = user-> xPos;
+            newY = user-> position.y -1;
+            newX = user-> position.x;
             break;
         case 'a':
-            newY = user-> yPos;
-            newX = user-> xPos -1;
+            newY = user-> position.y;
+            newX = user-> position.x -1;
             break;
         case 's':
-            newY = user-> yPos + 1;
-            newX = user-> xPos;
+            newY = user-> position.y + 1;
+            newX = user-> position.x;
             break;
         case 'd':
-            newY = user-> yPos;
-            newX = user-> xPos + 1;
+            newY = user-> position.y;
+            newX = user-> position.x + 1;
             break;
         default:
             break;
@@ -148,21 +169,21 @@ int checkPosition(int newY, int newX, Player *user) {
             playerMove(newY, newX, user);
             break;
         default:
-            move(user->yPos, user->xPos);
+            move(user->position.y, user->position.x);
             break;
     }
 }
 
 int playerMove(int y, int x, Player *user) {
     //Remove old position
-    mvprintw(user->yPos, user->xPos, ".");
+    mvprintw(user->position.y, user->position.x, ".");
     //Update player position
-    user->yPos = y;
-    user->xPos = x;
+    user->position.y = y;
+    user->position.x = x;
     //Draw player to new position
-    mvprintw(user->yPos, user->xPos, "@");
+    mvprintw(user->position.y, user->position.x, "@");
 
     //ncurses moves cursor right after pritning, so this moves it back
-    move(user->yPos, user->xPos);
+    move(user->position.y, user->position.x);
 }
 
