@@ -2,6 +2,7 @@
 #include "ncurses.h"
 #include <stdlib.h>
 #include <ctype.h>
+#include <time.h>
 
 typedef  struct Position {
     int x;
@@ -14,6 +15,8 @@ typedef struct Room {
     Position position;
     int height;
     int width;
+
+    Position doors[4];
     //Monster ** monsters //Array of pointers to montsters
     //Item ** items //Array of pointers to items
     
@@ -57,6 +60,7 @@ int screenSetUp() {
     printw("Hello World");
     noecho();
     refresh();
+    srand(time(NULL));
 
     return 1;
 }
@@ -86,6 +90,24 @@ Room *createRoom(int y, int x, int height, int width) {
     newRoom->position.y = y;
     newRoom->height = height;
     newRoom->width = width;
+ 
+    //a%b is a random integer in the range 0 .. (b-1)
+
+    //Top doors
+    newRoom->doors[0].x = rand() % (width -2) + newRoom->position.x +1;
+    newRoom->doors[0].y = newRoom->position.y;
+
+    //Bottom doors
+    newRoom->doors[1].x = rand() % (width -2) + newRoom->position.x +1;
+    newRoom->doors[1].y = newRoom->position.y + newRoom->height -1;
+
+    //Left side
+    newRoom->doors[2].x = newRoom->position.x;
+    newRoom->doors[2].y = rand() % (height -1) + newRoom->position.y + 1;
+
+    //Right side
+    newRoom->doors[3].x = newRoom->position.x + newRoom->width -1;
+    newRoom->doors[3].y = rand() % (height -1) + newRoom->position.y + 1;
 
     return newRoom;
 
@@ -95,19 +117,19 @@ int drawRoom(Room *room) {
     int x;
     int y;
 
-    //Draw corners
-    mvprintw(room->position.y, room->position.x, "+");
-    mvprintw(room->position.y, room->position.x + room->width - 1, "+");
-    mvprintw(room->position.y + room->height - 1, room->position.x, "+");
-    mvprintw(room->position.y + room->height - 1,room->position.x + room->width - 1, "+");
+    // //Draw corners
+    // mvprintw(room->position.y, room->position.x, "+");
+    // mvprintw(room->position.y, room->position.x + room->width - 1, "+");
+    // mvprintw(room->position.y + room->height - 1, room->position.x, "+");
+    // mvprintw(room->position.y + room->height - 1,room->position.x + room->width - 1, "+");
     //Draw top and bottom
-    for(x = room->position.x + 1; x < room->position.x + room->width - 1; x++) {
+    for(x = room->position.x; x < room->position.x + room->width; x++) {
         mvprintw(room->position.y, x, "-"); //Top
         mvprintw(room->position.y + room->height - 1, x, "-"); //bottom
     }
 
     //Draw floor and walls(side)
-    for(y = room->position.y + 1; y < room->position.y + room->height - 1;y++) {
+    for(y = room->position.y + 1; y < room->position.y + room->height -1;y++) {
         mvprintw(y, room->position.x, "|");
         mvprintw(y, room->position.x + room->width - 1, "|");
         //Draw floor
@@ -115,6 +137,12 @@ int drawRoom(Room *room) {
             mvprintw(y,x,".");
         }
     }
+
+    //Draw doors 
+    mvprintw(room->doors[0].y,room->doors[0].x, "+");
+    mvprintw(room->doors[1].y,room->doors[1].x, "+");
+    mvprintw(room->doors[2].y,room->doors[2].x, "+");
+    mvprintw(room->doors[3].y,room->doors[3].x, "+");
 
     return 1;
 }
