@@ -16,7 +16,7 @@ typedef struct Room {
     int height;
     int width;
 
-    Position doors[4];
+    Position ** doors;
     //Monster ** monsters //Array of pointers to montsters
     //Item ** items //Array of pointers to items
     
@@ -38,6 +38,7 @@ int playerMove(int, int, Player *user);
 //Room functions
 Room *createRoom(int y, int x, int height, int width);
 int drawRoom(Room *room);
+int connectDoors(Position *doorOne, Position *doorTwo);
 
 int main() {
     Player *user;
@@ -77,6 +78,14 @@ Room **mapSetUp() {
     rooms[0] = createRoom(13,13,6,8);
     drawRoom(rooms[0]);
 
+    rooms[1] = createRoom(2,40,6,8);
+    drawRoom(rooms[1]);
+
+    rooms[2] = createRoom(10,40,6,12);
+    drawRoom(rooms[2]);
+
+    connectDoors(rooms[0]->doors[3], rooms[2]->doors[1]);
+
     return rooms;
 
 }
@@ -90,24 +99,30 @@ Room *createRoom(int y, int x, int height, int width) {
     newRoom->position.y = y;
     newRoom->height = height;
     newRoom->width = width;
+
+    newRoom->doors = malloc(sizeof(Position) * 4);
  
     //a%b is a random integer in the range 0 .. (b-1)
 
     //Top doors
-    newRoom->doors[0].x = rand() % (width -2) + newRoom->position.x +1;
-    newRoom->doors[0].y = newRoom->position.y;
-
-    //Bottom doors
-    newRoom->doors[1].x = rand() % (width -2) + newRoom->position.x +1;
-    newRoom->doors[1].y = newRoom->position.y + newRoom->height -1;
+    newRoom->doors[0] = malloc(sizeof(Position));
+    newRoom->doors[0]->x = rand() % (width -2) + newRoom->position.x +1;
+    newRoom->doors[0]->y = newRoom->position.y;
 
     //Left side
-    newRoom->doors[2].x = newRoom->position.x;
-    newRoom->doors[2].y = rand() % (height -1) + newRoom->position.y + 1;
+    newRoom->doors[1] = malloc(sizeof(Position));
+    newRoom->doors[1]->x = newRoom->position.x;
+    newRoom->doors[1]->y = rand() % (height -1) + newRoom->position.y + 1;
+
+    //Bottom doors
+    newRoom->doors[2] = malloc(sizeof(Position));
+    newRoom->doors[2]->x = rand() % (width -2) + newRoom->position.x +1;
+    newRoom->doors[2]->y = newRoom->position.y + newRoom->height -1;
 
     //Right side
-    newRoom->doors[3].x = newRoom->position.x + newRoom->width -1;
-    newRoom->doors[3].y = rand() % (height -1) + newRoom->position.y + 1;
+    newRoom->doors[3] = malloc(sizeof(Position));
+    newRoom->doors[3]->x = newRoom->position.x + newRoom->width -1;
+    newRoom->doors[3]->y = rand() % (height -1) + newRoom->position.y + 1;
 
     return newRoom;
 
@@ -139,11 +154,15 @@ int drawRoom(Room *room) {
     }
 
     //Draw doors 
-    mvprintw(room->doors[0].y,room->doors[0].x, "+");
-    mvprintw(room->doors[1].y,room->doors[1].x, "+");
-    mvprintw(room->doors[2].y,room->doors[2].x, "+");
-    mvprintw(room->doors[3].y,room->doors[3].x, "+");
+    mvprintw(room->doors[0]->y,room->doors[0]->x, "+");
+    mvprintw(room->doors[1]->y,room->doors[1]->x, "+");
+    mvprintw(room->doors[2]->y,room->doors[2]->x, "+");
+    mvprintw(room->doors[3]->y,room->doors[3]->x, "+");
 
+    return 1;
+}
+
+int connectDoors(Position *doorOne, Position *doorTwo) {
     return 1;
 }
 
