@@ -16,7 +16,7 @@ typedef struct Room {
     int height;
     int width;
 
-    Position ** doors;
+    Position **doors;
     //Monster ** monsters //Array of pointers to montsters
     //Item ** items //Array of pointers to items
     
@@ -39,6 +39,7 @@ int playerMove(int, int, Player *user);
 Room *createRoom(int y, int x, int height, int width);
 int drawRoom(Room *room);
 int connectDoors(Position *doorOne, Position *doorTwo);
+int randRange(int min, int max, int exclusive);
 
 int main() {
     Player *user;
@@ -81,10 +82,7 @@ Room **mapSetUp() {
     rooms[1] = createRoom(2,40,6,8);
     drawRoom(rooms[1]);
 
-    rooms[2] = createRoom(10,40,6,12);
-    drawRoom(rooms[2]);
-
-    connectDoors(rooms[0]->doors[3], rooms[2]->doors[1]);
+    connectDoors(rooms[1]->doors[1], rooms[0]->doors[3]);
 
     return rooms;
 
@@ -132,11 +130,6 @@ int drawRoom(Room *room) {
     int x;
     int y;
 
-    // //Draw corners
-    // mvprintw(room->position.y, room->position.x, "+");
-    // mvprintw(room->position.y, room->position.x + room->width - 1, "+");
-    // mvprintw(room->position.y + room->height - 1, room->position.x, "+");
-    // mvprintw(room->position.y + room->height - 1,room->position.x + room->width - 1, "+");
     //Draw top and bottom
     for(x = room->position.x; x < room->position.x + room->width; x++) {
         mvprintw(room->position.y, x, "-"); //Top
@@ -161,9 +154,63 @@ int drawRoom(Room *room) {
 
     return 1;
 }
-
+//Currently work for everything far right door to far right door
 int connectDoors(Position *doorOne, Position *doorTwo) {
+    Position tempDoorOne;
+    Position tempDoorTwo;
+
+    //if we have to connect rooms from right to left
+    if(doorTwo->x < doorOne->x){
+        tempDoorOne.x = doorTwo->x;
+        tempDoorOne.y = doorTwo->y;
+
+        tempDoorTwo.x = doorOne->x;
+        tempDoorTwo.y = doorOne->y;
+    }else {
+        tempDoorOne.x = doorOne->x;
+        tempDoorOne.y = doorOne->y;
+
+        tempDoorTwo.x = doorTwo->x;
+        tempDoorTwo.y = doorTwo->y;
+    }
+
+    int xPosBetweenRoom = randRange(tempDoorOne.x+1,tempDoorTwo.x, 1);
+    int yPosBetweenRoom = randRange(tempDoorOne.y,tempDoorTwo.y, 0);
+
+    for(int i = tempDoorOne.x; i < xPosBetweenRoom; i++) {
+        tempDoorOne.x++;
+        mvprintw(tempDoorOne.y, tempDoorOne.x, "#");
+    }
+
+
+    for(int i = tempDoorTwo.x; i > xPosBetweenRoom; i--) {
+        tempDoorTwo.x--;
+        mvprintw(tempDoorTwo.y, tempDoorTwo.x, "#");
+    }
+
+    // >= make sure the two corridors do not draw over the top of each other
+    while(tempDoorOne.y >= yPosBetweenRoom) {
+        tempDoorOne.y--;
+        mvprintw(tempDoorOne.y,tempDoorOne.x,"$");
+    }
+
+     while(tempDoorTwo.y < yPosBetweenRoom) {
+        tempDoorTwo.y++;
+        mvprintw(tempDoorTwo.y,tempDoorTwo.x,"#");
+    }
+
+    mvprintw(yPosBetweenRoom, xPosBetweenRoom+1,"D");
+
     return 1;
+}
+
+//Todo: readup on this function
+int randRange(int min, int max, int exclusive) {
+    if(exclusive) {
+        max -= 1;
+    }
+    int diff = max-min;
+    return (int) (((double)(diff+1)/RAND_MAX) * rand() + min);
 }
 
 Player *playerSetUp() {
@@ -207,12 +254,14 @@ int handleInput(int input, Player *user) {
     checkPosition(newY,newX,user);
 }
 
-//Check waht is at new position
+//Check what is at new position
 int checkPosition(int newY, int newX, Player *user) {
     int space;
     //mvinch - move cursor to new pos, return char at pos
     switch(mvinch(newY,newX)) {
         case '.':
+        case '+':
+        case '#':
             playerMove(newY, newX, user);
             break;
         default:
