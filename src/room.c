@@ -103,7 +103,7 @@ int connectDoors(Position *doorOne, Position *doorTwo) {
     // >= make sure the two corridors do not draw over the top of each other
     while(tempDoorOne.y >= yPosBetweenRoom) {
         tempDoorOne.y--;
-        mvprintw(tempDoorOne.y,tempDoorOne.x,"$");
+        mvprintw(tempDoorOne.y,tempDoorOne.x,"#");
     }
     
     while(tempDoorTwo.y < yPosBetweenRoom) {
