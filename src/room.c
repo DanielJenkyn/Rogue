@@ -45,7 +45,7 @@ int drawRoom(Room *room) {
     //Draw top and bottom
     for(x = room->position.x; x < room->position.x + room->width; x++) {
         mvprintw(room->position.y, x, "-"); //Top
-        mvprintw(room->position.y + room->height - 1, x, "-"); //bottom
+        mvprintw(room->position.y + room->height - 1, x, "-"); //Bottom
     }
     
     //Draw floor and walls(side)
@@ -66,7 +66,7 @@ int drawRoom(Room *room) {
     
     return 1;
 }
-//Currently works for everything far right door to far right door
+//This function is a cluster fuck. Will switch to A* / BFS
 int createCorridor(Position *doorOne, Position *doorTwo) {
     Position tempDoorOne;
     Position tempDoorTwo;
@@ -79,7 +79,7 @@ int createCorridor(Position *doorOne, Position *doorTwo) {
     int xPosBetweenRoom = randRange(tempDoorOne.x+1,tempDoorTwo.x, 1);
     int yPosBetweenRoom = randRange(tempDoorOne.y,tempDoorTwo.y, 0);
 
-    //Refactor
+    //Refactor - Will most l
     //Draw Horizontal
     for(int i = tempDoorOne.x; i < xPosBetweenRoom; i++) {
         tempDoorOne.x++;

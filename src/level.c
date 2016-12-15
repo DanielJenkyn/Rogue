@@ -1,6 +1,17 @@
 #include "rogue.h"
 
-Room **mapSetUp() {
+Level *createLevel(int level) {
+    Level *newLevel = malloc(sizeof(Level));
+    newLevel->level = level;
+    newLevel->noOfRooms = 3;
+    newLevel->rooms = roomSetUp();
+    //Save level after rooms are created!
+    newLevel->tiles = saveLevelPositions();
+
+    return newLevel;
+}
+
+Room **roomSetUp() {
     /*
      We need to dereference twice, access first address which happens to be a
      pointer then deference that pointer.
