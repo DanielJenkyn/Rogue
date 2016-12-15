@@ -44,7 +44,7 @@ int playerMove(Position *newPosition, Player *user, char **level);
 //Room functions
 Room *createRoom(int y, int x, int height, int width);
 int drawRoom(Room *room);
-int connectDoors(Position *doorOne, Position *doorTwo);
+int createCorridor(Position *doorOne, Position *doorTwo);
 int randRange(int min, int max, int exclusive);
 
 #endif

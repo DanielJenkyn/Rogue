@@ -13,8 +13,12 @@ Room **mapSetUp() {
     
     rooms[1] = createRoom(2,40,6,8);
     drawRoom(rooms[1]);
+
+    rooms[2] = createRoom(13,55,6,8);
+    drawRoom(rooms[2]);
     
-    connectDoors(rooms[1]->doors[1], rooms[0]->doors[3]);
+    createCorridor(rooms[0]->doors[3], rooms[1]->doors[1]);
+    createCorridor(rooms[1]->doors[3], rooms[2]->doors[1]);
     
     return rooms;
 }

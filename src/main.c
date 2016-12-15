@@ -23,7 +23,7 @@ int main() {
 
 int screenSetUp() {
     initscr();
-    printw("Hello World");
+    //printw("Hello World");
     noecho();
     refresh();
     srand(time(NULL));
