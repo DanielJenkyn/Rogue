@@ -16,23 +16,23 @@ Room *createRoom(int y, int x, int height, int width) {
     
     //Top doors
     newRoom->doors[0] = malloc(sizeof(Position));
-    newRoom->doors[0]->x = randRange(newRoom->position.x, newRoom->width, 0);
+    newRoom->doors[0]->x = randRange(newRoom->position.x+1, newRoom->position.x + newRoom->width-2, 0);
     newRoom->doors[0]->y = newRoom->position.y;
     
     //Left side
     newRoom->doors[1] = malloc(sizeof(Position));
     newRoom->doors[1]->x = newRoom->position.x;
-    newRoom->doors[1]->y = randRange(newRoom->position.y, newRoom->height, 0);
+    newRoom->doors[1]->y = randRange(newRoom->position.y+1, newRoom->position.y + newRoom->height-2, 0);
     
     //Bottom doors
     newRoom->doors[2] = malloc(sizeof(Position));
-    newRoom->doors[2]->x = randRange(newRoom->position.x, newRoom->width, 0);
-    newRoom->doors[2]->y = newRoom->position.y + newRoom->height;
+    newRoom->doors[2]->x = randRange(newRoom->position.x+1, newRoom->position.x + newRoom->width-2, 0);
+    newRoom->doors[2]->y = newRoom->position.y + newRoom->height-1;
     
     //Right side
     newRoom->doors[3] = malloc(sizeof(Position));
-    newRoom->doors[3]->x = newRoom->position.x + newRoom->width;
-    newRoom->doors[3]->y = randRange(newRoom->position.y, newRoom->height, 0);
+    newRoom->doors[3]->x = newRoom->position.x + newRoom->width-1;
+    newRoom->doors[3]->y = randRange(newRoom->position.y+1, newRoom->position.y + newRoom->height-2, 0);
     
     return newRoom;
     
@@ -59,10 +59,10 @@ int drawRoom(Room *room) {
     }
     
     //Draw doors
-    mvprintw(room->doors[0]->y,room->doors[0]->x, "+");
-    mvprintw(room->doors[1]->y,room->doors[1]->x, "+");
-    mvprintw(room->doors[2]->y,room->doors[2]->x, "+");
-    mvprintw(room->doors[3]->y,room->doors[3]->x, "+");
+    mvprintw(room->doors[0]->y,room->doors[0]->x, "0");
+    mvprintw(room->doors[1]->y,room->doors[1]->x, "1");
+    mvprintw(room->doors[2]->y,room->doors[2]->x, "2");
+    mvprintw(room->doors[3]->y,room->doors[3]->x, "3");
     
     return 1;
 }
