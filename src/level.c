@@ -30,6 +30,7 @@ Room **roomSetUp() {
     
     createCorridor(rooms[0]->doors[3], rooms[1]->doors[1]);
     createCorridor(rooms[1]->doors[3], rooms[2]->doors[1]);
+    //createCorridor(rooms[0]->doors[3], rooms[2]->doors[1]);
     
     return rooms;
 }

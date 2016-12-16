@@ -59,10 +59,10 @@ int drawRoom(Room *room) {
     }
     
     //Draw doors
-    mvprintw(room->doors[0]->y,room->doors[0]->x, "0");
-    mvprintw(room->doors[1]->y,room->doors[1]->x, "1");
-    mvprintw(room->doors[2]->y,room->doors[2]->x, "2");
-    mvprintw(room->doors[3]->y,room->doors[3]->x, "3");
+    mvprintw(room->doors[0]->y,room->doors[0]->x, "+");
+    mvprintw(room->doors[1]->y,room->doors[1]->x, "+");
+    mvprintw(room->doors[2]->y,room->doors[2]->x, "+");
+    mvprintw(room->doors[3]->y,room->doors[3]->x, "+");
     
     return 1;
 }
