@@ -96,3 +96,20 @@ int setStartPos(Enemy *enemy, Room *room) {
 	mvprintw(enemy->position->y, enemy->position->x,buffer);
 	return 0;
 }
+
+int moveEnemy(Level *level) {
+	for(int x = 0; x<level->noOfEnemies;x++) {
+		if(level->enemies[x]->pathfinding == 1) {
+			//rand
+		}else {
+			//seek
+			pathfinding(level->enemies[x]->position, level->user->position);
+		}
+	}
+
+	return 0;
+}
+
+int pathfinding(Position *start, Position *destination) {
+	return 0;
+}
