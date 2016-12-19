@@ -14,7 +14,6 @@ Player *playerSetUp() {
     return newPlayer;
 }
 
-
 Position *handleInput(int input, Player *user) {
     Position *newPosition;
     newPosition = malloc(sizeof(Position));

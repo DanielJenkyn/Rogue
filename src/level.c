@@ -8,6 +8,8 @@ Level *createLevel(int level) {
     //Save level after rooms are created!
     newLevel->tiles = saveLevelPositions();
 
+     addEnemy(newLevel);
+
     return newLevel;
 }
 
@@ -30,19 +32,21 @@ Room **roomSetUp() {
     
     createCorridor(rooms[0]->doors[3], rooms[1]->doors[1]);
     createCorridor(rooms[1]->doors[3], rooms[2]->doors[1]);
+
     //createCorridor(rooms[0]->doors[3], rooms[2]->doors[1]);
-    
     return rooms;
 }
 
 char **saveLevelPositions() {
     int x, y;
+    int mapWidth = 100;
+    int mapHeight = 25;
     char **positions;
-    positions = malloc(sizeof(char *)*25);
+    positions = malloc(sizeof(char *) * mapHeight);
     
-    for(y = 0; y < 25; y++) {
-        positions[y] = malloc(sizeof(char)*100);
-        for(x = 0; x < 100; x++) {
+    for(y = 0; y < mapHeight; y++) {
+        positions[y] = malloc(sizeof(char) * mapWidth);
+        for(x = 0; x < mapWidth; x++) {
             positions[y][x] = mvinch(y,x);
         }
     } 

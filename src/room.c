@@ -35,7 +35,6 @@ Room *createRoom(int y, int x, int height, int width) {
     newRoom->doors[3]->y = randRange(newRoom->position.y+1, newRoom->position.y + newRoom->height-2, 0);
     
     return newRoom;
-    
 }
 
 int drawRoom(Room *room) {
@@ -113,15 +112,5 @@ int createCorridor(Position *doorOne, Position *doorTwo) {
             mvprintw(tempDoorTwo.y,tempDoorTwo.x,"#");
         }
     }
-    
     return 1;
-}
-
-//Todo: readup on this function
-int randRange(int min, int max, int exclusive) {
-    if(exclusive) {
-        max -= 1;
-    }
-    int diff = max-min;
-    return (int) (((double)(diff+1)/RAND_MAX) * rand() + min);
 }

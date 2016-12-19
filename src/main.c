@@ -7,7 +7,7 @@ int main() {
 
     Level *level;
     screenSetUp();
-    level = createLevel(1);
+    level = createLevel(5);
 
     user = playerSetUp();
     
@@ -29,4 +29,13 @@ int screenSetUp() {
     srand(time(NULL));
     
     return 1;
+}
+
+//Todo: readup on this function
+int randRange(int min, int max, int exclusive) {
+    if(exclusive) {
+        max -= 1;
+    }
+    int diff = max-min;
+    return (int) (((double)(diff+1)/RAND_MAX) * rand() + min);
 }
