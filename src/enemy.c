@@ -8,7 +8,6 @@
 	defence: 1
 	speed: 2
 	pathfinding: 1 (random)
-
 1 Goblin:
 	levels: 2-5
 	symbol: G
@@ -17,7 +16,6 @@
 	defence: 1
 	speed: 1
 	pathfinding: 2 (seeking)
-
 2 Troll:
 	levels: 4-6
 	symbol: T
@@ -39,7 +37,6 @@ int addEnemy(Level *level) {
 			setStartPos(level->enemies[level->noOfEnemies],level->rooms[x]);
 			level->noOfEnemies++;
 		}
-
 	}
 	return 0;
 }
@@ -52,7 +49,7 @@ Enemy *selectEnemy(int level) {
 			break;
 		case 2:
 		case 3:
-		monster = randRange(0,1,0);
+			monster = randRange(0,1,0);
 			break;
 		case 4:
 		case 5:
@@ -61,7 +58,8 @@ Enemy *selectEnemy(int level) {
 		case 6:
 			monster = 2;
 			break;
-
+		default:
+			monster = 0;
 	}
 
 	switch(monster) {
@@ -91,9 +89,10 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 
 int setStartPos(Enemy *enemy, Room *room) {
 	char buffer[8];
-	enemy->position.y = randRange(room->position.y+1, room->position.y + room->height-2, 0);
-	enemy->position.x = randRange(room->position.x+1, room->position.x + room->width-2, 0);
+	enemy->position = malloc(sizeof(Position));
+	enemy->position->y = randRange(room->position.y+1, room->position.y + room->height-2, 0);
+	enemy->position->x = randRange(room->position.x+1, room->position.x + room->width-2, 0);
 	sprintf(buffer, "%c", enemy->symbol);
-	mvprintw(enemy->position.y, enemy->position.x,buffer);
+	mvprintw(enemy->position->y, enemy->position->x,buffer);
 	return 0;
 }

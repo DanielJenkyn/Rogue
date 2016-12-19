@@ -50,6 +50,5 @@ char **saveLevelPositions() {
             positions[y][x] = mvinch(y,x);
         }
     } 
-
     return positions;
 }
