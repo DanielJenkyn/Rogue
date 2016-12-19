@@ -33,13 +33,13 @@ typedef struct Room {
 }Room;
 
 typedef struct Player {
-    Position position;
+    Position *position;
     int health;
     //Room *room;
 }Player;
 
 typedef struct Enemy {
-    Position position;
+    Position *position;
     char symbol;
     int health;
     int attack;

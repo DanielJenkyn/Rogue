@@ -4,11 +4,9 @@ int main() {
     Player *user;
     int ch;
     Position *newPosition;
-
     Level *level;
     screenSetUp();
     level = createLevel(5);
-
     user = playerSetUp();
     
     //Main game loop
