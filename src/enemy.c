@@ -71,6 +71,8 @@ Enemy *selectEnemy(int level) {
 			return createEnemy('G',5,3,1,1,2);
 		case 2://Troll
 			return createEnemy('T',15,5,3,1,1);
+		default:
+			return 0;
 	}
 }
 
