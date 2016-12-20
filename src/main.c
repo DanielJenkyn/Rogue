@@ -7,7 +7,7 @@ int main() {
     Level *level;
     screenSetUp();
     level = createLevel(5);
-    user = playerSetUp();
+    
     
     //Main game loop
     while((ch = getch()) != 'q') {

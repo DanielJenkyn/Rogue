@@ -7,6 +7,7 @@ Level *createLevel(int level) {
     newLevel->rooms = roomSetUp();
     //Save level after rooms are created!
     newLevel->tiles = saveLevelPositions();
+    newLevel->user = playerSetUp();
 
      addEnemy(newLevel);
 

@@ -76,6 +76,7 @@ Enemy *selectEnemy(int level) {
 
 Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, int pathfinding) {
 	Enemy *newEnemy = malloc(sizeof(Enemy));
+	newEnemy->position = malloc(sizeof(Position));
 
 	newEnemy->symbol = symbol;
 	newEnemy->health = health;
@@ -84,16 +85,16 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 	newEnemy->speed = speed;
 	newEnemy->pathfinding = pathfinding;
 
+	sprintf(newEnemy->string, "%c", symbol);
+
 	return newEnemy;
 }
 
 int setStartPos(Enemy *enemy, Room *room) {
-	char buffer[8];
-	enemy->position = malloc(sizeof(Position));
 	enemy->position->y = randRange(room->position.y+1, room->position.y + room->height-2, 0);
 	enemy->position->x = randRange(room->position.x+1, room->position.x + room->width-2, 0);
-	sprintf(buffer, "%c", enemy->symbol);
-	mvprintw(enemy->position->y, enemy->position->x,buffer);
+
+	mvprintw(enemy->position->y, enemy->position->x,enemy->string);
 	return 0;
 }
 

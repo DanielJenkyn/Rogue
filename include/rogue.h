@@ -15,6 +15,7 @@ typedef struct Level {
     int noOfEnemies;
     struct Enemy **enemies;
     char **tiles;
+    struct Player *user;
 }Level;
 
 typedef struct Position {
@@ -40,6 +41,8 @@ typedef struct Player {
 
 typedef struct Enemy {
     Position *position;
+
+    char string[2];
     char symbol;
     int health;
     int attack;
