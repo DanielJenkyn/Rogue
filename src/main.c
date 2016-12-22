@@ -1,7 +1,6 @@
 #include "rogue.h"
 
 int main() {
-    Player *user;
     int ch;
     Position *newPosition;
     Level *level;
@@ -11,9 +10,11 @@ int main() {
     
     //Main game loop
     while((ch = getch()) != 'q') {
-        newPosition = handleInput(ch, user);
-        checkPosition(newPosition, user,level->tiles);
-        
+        newPosition = handleInput(ch, level->user);
+        checkPosition(newPosition, level->user,level->tiles);
+        move(level->user->position->y, level->user->position->x);
+        moveEnemy(level);
+        move(level->user->position->y,level->user->position->x);
     }
     endwin();
     return 0;

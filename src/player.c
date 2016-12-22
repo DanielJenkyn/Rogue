@@ -44,7 +44,6 @@ Position *handleInput(int input, Player *user) {
 
 //Check what is at new position
 int checkPosition(Position *newPosition, Player *user, char **level) {
-    int space;
     //mvinch - move cursor to new pos, return char at pos
     switch(mvinch(newPosition->y, newPosition->x)) {
         case '.':

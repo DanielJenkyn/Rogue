@@ -41,7 +41,6 @@ typedef struct Player {
 
 typedef struct Enemy {
     Position *position;
-
     char string[2];
     char symbol;
     int health;
@@ -77,5 +76,7 @@ int addEnemy(Level *level);
 Enemy *selectEnemy(int level);
 Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, int pathfinding);
 int setStartPos(Enemy *enemy, Room *room);
+int moveEnemy(Level *level);
+int pathfindingSeek(Position *start, Position *destination);
 
 #endif

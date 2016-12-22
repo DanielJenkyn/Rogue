@@ -9,7 +9,7 @@ Level *createLevel(int level) {
     newLevel->tiles = saveLevelPositions();
     newLevel->user = playerSetUp();
 
-     addEnemy(newLevel);
+    addEnemy(newLevel);
 
     return newLevel;
 }
