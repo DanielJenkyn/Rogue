@@ -36,7 +36,10 @@ typedef struct Room {
 typedef struct Player {
     Position *position;
     int health;
+    int maxHealth;
     int attack;
+    int gold;
+    int exp;
     //Unused
     // int defence;
     // int speed;
@@ -56,8 +59,11 @@ typedef struct Enemy {
 }Enemy;
 
 //Main functions
-int screenSetUp();
 int randRange(int min, int max, int exclusive);
+
+//Screen functions
+int screenSetUp();
+int printStats(Level *level);
 
 //Level functions
 Level *createLevel(int level);

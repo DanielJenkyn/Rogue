@@ -133,7 +133,6 @@ int pathfindingSeek(Position *start, Position *destination) {
  	}else if((abs((start->y - 1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y - 1,start->x) == '.')) {
 		start->y = start->y - 1;
 	}
-
 	return 1;
 }
 

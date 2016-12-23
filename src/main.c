@@ -6,10 +6,12 @@ int main() {
     Level *level;
     screenSetUp();
     level = createLevel(2);
+    printStats(level);
     
     
     //Main game loop
     while((ch = getch()) != 'q') {
+        printStats(level);
         newPosition = handleInput(ch, level->user);
         checkPosition(newPosition, level);
         moveEnemy(level);
@@ -17,16 +19,6 @@ int main() {
     }
     endwin();
     return 0;
-}
-
-int screenSetUp() {
-    initscr();
-    printw("Hello World");
-    noecho();
-    refresh();
-    srand(time(NULL));
-    
-    return 1;
 }
 
 //Todo: readup on this function
