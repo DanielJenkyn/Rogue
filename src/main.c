@@ -11,8 +11,7 @@ int main() {
     //Main game loop
     while((ch = getch()) != 'q') {
         newPosition = handleInput(ch, level->user);
-        checkPosition(newPosition, level->user,level->tiles);
-        move(level->user->position->y, level->user->position->x);
+        checkPosition(newPosition, level);
         moveEnemy(level);
         move(level->user->position->y,level->user->position->x);
     }

@@ -84,12 +84,19 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 	newEnemy->defence = defence;
 	newEnemy->speed = speed;
 	newEnemy->pathfinding = pathfinding;
+	newEnemy->alive = 1;
 
 	sprintf(newEnemy->string, "%c", symbol);
 
 	newEnemy->position = malloc(sizeof(Position));
 
 	return newEnemy;
+}
+
+int killEnemy(Enemy *enemy) {
+	mvprintw(enemy->position->y, enemy->position->x,".");
+	enemy->alive = 0;
+	return 1;
 }
 
 int setStartPos(Enemy *enemy, Room *room) {
@@ -102,6 +109,8 @@ int setStartPos(Enemy *enemy, Room *room) {
 
 int moveEnemy(Level *level) {
 	for(int x = 0; x<level->noOfEnemies;x++) {
+		if(level->enemies[x]->alive == 0) 
+			continue;
 		mvprintw(level->enemies[x]->position->y,level->enemies[x]->position->x, ".");
 		if(level->enemies[x]->pathfinding == 1) {
 			pathfindingSeek(level->enemies[x]->position, level->user->position);
@@ -148,4 +157,13 @@ int pathfindingRandom(Position *position) {
 			break;
 	}
 	return 1;
+}
+
+Enemy *getEnemyAt(Position *position, Enemy **enemies) {
+	for(int x = 0; x < 6; x++) {
+		if((position->y == enemies[x]->position->y) && (position->x == enemies[x]->position->x)) {
+			return enemies[x];
+		}
+	}
+	return NULL;
 }

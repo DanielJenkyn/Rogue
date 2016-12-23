@@ -36,6 +36,10 @@ typedef struct Room {
 typedef struct Player {
     Position *position;
     int health;
+    int attack;
+    //Unused
+    // int defence;
+    // int speed;
     //Room *room;
 }Player;
 
@@ -45,10 +49,10 @@ typedef struct Enemy {
     char symbol;
     int health;
     int attack;
-    int speed;
     int defence;
+    int speed;
+    int alive;
     int pathfinding;
-    
 }Enemy;
 
 //Main functions
@@ -63,7 +67,7 @@ char **saveLevelPositions();
 //Player functions
 Player *playerSetUp();
 Position *handleInput(int input, Player *user);
-int checkPosition(Position *newPosition, Player *user, char **level);
+int checkPosition(Position *newPosition, Level *level);
 int playerMove(Position *newPosition, Player *user, char **level);
 
 //Room functions
@@ -75,9 +79,14 @@ int createCorridor(Position *doorOne, Position *doorTwo);
 int addEnemy(Level *level);
 Enemy *selectEnemy(int level);
 Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, int pathfinding);
+int killEnemy(Enemy *enemy);
 int setStartPos(Enemy *enemy, Room *room);
 int moveEnemy(Level *level);
 int pathfindingSeek(Position *start, Position *destination);
 int pathfindingRandom(Position *position);
+Enemy *getEnemyAt(Position *position, Enemy **enemies);
+
+//Combat functions
+int combat(Player *player, Enemy *enemy, int order);
 
 #endif
