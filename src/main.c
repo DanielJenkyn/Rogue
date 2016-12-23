@@ -5,7 +5,7 @@ int main() {
     Position *newPosition;
     Level *level;
     screenSetUp();
-    level = createLevel(5);
+    level = createLevel(2);
     
     
     //Main game loop

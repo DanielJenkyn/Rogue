@@ -33,7 +33,7 @@ int addEnemy(Level *level) {
 
 	for(int x = 0; x<level->noOfRooms;x++) {
 		//50% spawn rate
-		if((randRange(0,1,0) == 0)) {
+		if((randRange(0,9,0) !=  (0|1|2|3))) {
 			level->enemies[level->noOfEnemies] = selectEnemy(level->level);
 			setStartPos(level->enemies[level->noOfEnemies],level->rooms[x]);
 			level->noOfEnemies++;
@@ -93,8 +93,8 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 }
 
 int setStartPos(Enemy *enemy, Room *room) {
-	enemy->position->y = randRange(room->position.y+1, room->position.y + room->height-2, 0);
-	enemy->position->x = randRange(room->position.x+1, room->position.x + room->width-2, 0);
+	enemy->position->y = randRange(room->position.y + 1, room->position.y + room->height - 2, 0);
+	enemy->position->x = randRange(room->position.x + 1, room->position.x + room->width - 2, 0);
 
 	mvprintw(enemy->position->y, enemy->position->x,enemy->string);
 	return 0;
@@ -102,27 +102,50 @@ int setStartPos(Enemy *enemy, Room *room) {
 
 int moveEnemy(Level *level) {
 	for(int x = 0; x<level->noOfEnemies;x++) {
+		mvprintw(level->enemies[x]->position->y,level->enemies[x]->position->x, ".");
 		if(level->enemies[x]->pathfinding == 1) {
-			mvprintw(level->enemies[x]->position->y,level->enemies[x]->position->x, ".");
 			pathfindingSeek(level->enemies[x]->position, level->user->position);
-			mvprintw(level->enemies[x]->position->y,level->enemies[x]->position->x, level->enemies[x]->string);
 		} else {
 			//Default to random movement
+			pathfindingRandom(level->enemies[x]->position);
 		}
+		mvprintw(level->enemies[x]->position->y,level->enemies[x]->position->x, level->enemies[x]->string);
 	}
 	return 0;
 }
 
 int pathfindingSeek(Position *start, Position *destination) {
-	if((abs((start->x - 1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y,start->x-1) == '.')) {
+	if((abs((start->x - 1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y,start->x - 1) == '.')) {
 		start->x = start->x - 1;
-	}else if((abs((start->x + 1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y,start->x+1) == '.')) {
+	}else if((abs((start->x + 1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y,start->x + 1) == '.')) {
 		start->x = start->x + 1; 
- 	}else if((abs((start->y + 1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y+1,start->x) == '.')) {
+ 	}else if((abs((start->y + 1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y + 1,start->x) == '.')) {
 		start->y = start->y + 1; 
- 	}else if((abs((start->y - 1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y-1,start->x) == '.')) {
+ 	}else if((abs((start->y - 1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y - 1,start->x) == '.')) {
 		start->y = start->y - 1;
 	}
 
+	return 1;
+}
+
+int pathfindingRandom(Position *position) {
+	int random = randRange(0,5,1);
+
+	switch(random) {
+		case 0:
+			if(mvinch(position->y - 1, position->x) == '.'){position->y -= 1;}
+			break;
+		case 1:
+			if(mvinch(position->y + 1, position->x) == '.'){position->y += 1;}
+			break;
+		case 2:
+			if(mvinch(position->y, position->x + 1) == '.'){position->x += 1;}
+			break;
+		case 3:
+			if(mvinch(position->y, position->x - 1) == '.'){position->x -= 1;}
+			break;
+		case 4:
+			break;
+	}
 	return 1;
 }

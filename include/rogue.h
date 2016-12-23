@@ -78,5 +78,6 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 int setStartPos(Enemy *enemy, Room *room);
 int moveEnemy(Level *level);
 int pathfindingSeek(Position *start, Position *destination);
+int pathfindingRandom(Position *position);
 
 #endif
