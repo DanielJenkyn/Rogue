@@ -4,10 +4,10 @@ int main() {
     int ch;
     Position *newPosition;
     Level *level;
+    
     screenSetUp();
     level = createLevel(2);
     printStats(level);
-    
     
     //Main game loop
     while((ch = getch()) != 'q') {

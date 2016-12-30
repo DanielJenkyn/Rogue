@@ -15,5 +15,7 @@ int printStats(Level *level) {
 	printw("    Health: %d/%d",level->user->health, level->user->maxHealth);
 	printw("    Attack: %d", level->user->attack);
 	printw("    Exp: %d", level->user->exp);
+    printw("    ");
+
 	return 1;
 }

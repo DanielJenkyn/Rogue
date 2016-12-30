@@ -13,7 +13,7 @@ int combat(Player *player, Enemy *enemy, int order) {
 		}
 	}
 	//enemy attack
-	if(order == 1) {
+	else{
 		player->health -= enemy->attack;
 		if(player->health > 0) {
 			enemy->health -= player->attack;
