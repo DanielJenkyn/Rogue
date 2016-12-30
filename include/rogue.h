@@ -72,12 +72,13 @@ char **saveLevelPositions();
 
 //Player functions
 Player *playerSetUp();
+int spawnPlayer(Room **rooms, Player *user);
 Position *handleInput(int input, Player *user);
 int checkPosition(Position *newPosition, Level *level);
 int playerMove(Position *newPosition, Player *user, char **level);
 
 //Room functions
-Room *createRoom(int y, int x, int height, int width);
+Room *createRoom(int grid);
 int drawRoom(Room *room);
 int createCorridor(Position *doorOne, Position *doorTwo);
 

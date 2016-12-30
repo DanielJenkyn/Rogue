@@ -1,18 +1,47 @@
 #include "rogue.h"
 
-Room *createRoom(int y, int x, int height, int width) {
+Room *createRoom(int grid) {
     
     Room *newRoom;
     newRoom = malloc(sizeof(Room));
     
-    newRoom->position.x = x;
-    newRoom->position.y = y;
-    newRoom->height = height;
-    newRoom->width = width;
+    switch(grid) {
+        case 0:
+            newRoom->position.x = 0;
+            newRoom->position.y = 0;
+            break;
+        case 1:
+            newRoom->position.x = 33;
+            newRoom->position.y = 0;
+            break;
+        case 2:
+            newRoom->position.x = 66;
+            newRoom->position.y = 0;
+            break;
+        case 3:
+            newRoom->position.x = 0;
+            newRoom->position.y = 14;
+            break;
+        case 4:
+            newRoom->position.x = 33;
+            newRoom->position.y = 14;
+            break;
+        case 5:
+            newRoom->position.x = 66;
+            newRoom->position.y = 14;
+            break;
+    }
+
+    newRoom->height = randRange(3,10,0);
+    newRoom->width = randRange(3,16,0);
     
+    //room x,y offset
+    newRoom->position.x += randRange(1,(29 - newRoom->width),0);
+    newRoom->position.y += randRange(1,(10 - newRoom->height),0);
+
+
+
     newRoom->doors = malloc(sizeof(Position) * 4);
-    
-    //a%b is a random integer in the range 0 .. (b-1)
     
     //Top doors
     newRoom->doors[0] = malloc(sizeof(Position));
