@@ -2,12 +2,12 @@
 #ifndef ROGUE_H
 #define ROGUE_H
 
-#include <stdio.h>
 #include <ncurses.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
 
+/*******Struct defintions*******/
 typedef struct Level {
     int level;
     int noOfRooms;
@@ -58,6 +58,10 @@ typedef struct Enemy {
     int pathfinding;
 }Enemy;
 
+/*******Global vars*******/
+static const int MAX_HEIGHT = 25;
+static const int MAX_WIDTH = 100;
+
 //Main functions
 int randRange(int min, int max, int exclusive);
 
@@ -67,7 +71,7 @@ int printStats(Level *level);
 
 //Level functions
 Level *createLevel(int level);
-Room **roomSetUp();
+Room **roomSetUp(int noOfRooms);
 char **saveLevelPositions();
 
 //Player functions

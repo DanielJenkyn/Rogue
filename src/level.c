@@ -3,8 +3,9 @@
 Level *createLevel(int level) {
     Level *newLevel = malloc(sizeof(Level));
     newLevel->level = level;
-    newLevel->noOfRooms = 3;
-    newLevel->rooms = roomSetUp();
+    newLevel->noOfRooms = 6;
+    newLevel->rooms = roomSetUp(newLevel->noOfRooms);
+    
     //Save level after rooms are created!
     newLevel->tiles = saveLevelPositions();
     newLevel->user = playerSetUp();
@@ -15,7 +16,7 @@ Level *createLevel(int level) {
     return newLevel;
 }
 
-Room **roomSetUp() {
+Room **roomSetUp(int noOfRooms) {
 
     /*
      We need to dereference twice, access first address which happens to be a
@@ -23,9 +24,9 @@ Room **roomSetUp() {
      */
     Room **rooms;
     //Allocates no of bytes for object type Room * 6, enough for 6 rooms
-    rooms = malloc(sizeof(Room)*6);
+    rooms = malloc(sizeof(Room) * noOfRooms);
 
-    for(int x =0; x < 6; x++) {
+    for(int x = 0; x < noOfRooms; x++) {
         rooms[x] = createRoom(x);
         drawRoom(rooms[x]);
     }
@@ -35,14 +36,12 @@ Room **roomSetUp() {
 
 char **saveLevelPositions() {
     int x, y;
-    int mapWidth = 100;
-    int mapHeight = 25;
     char **positions;
-    positions = malloc(sizeof(char *) * mapHeight);
+    positions = malloc(sizeof(char *) * MAX_HEIGHT);
     
-    for(y = 0; y < mapHeight; y++) {
-        positions[y] = malloc(sizeof(char) * mapWidth);
-        for(x = 0; x < mapWidth; x++) {
+    for(y = 0; y < MAX_HEIGHT; y++) {
+        positions[y] = malloc(sizeof(char) * MAX_WIDTH);
+        for(x = 0; x < MAX_WIDTH; x++) {
             positions[y][x] = mvinch(y,x);
         }
     } 
