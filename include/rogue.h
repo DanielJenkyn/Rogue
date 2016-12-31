@@ -84,7 +84,6 @@ int playerMove(Position *newPosition, Player *user, char **level);
 //Room functions
 Room *createRoom(int grid);
 int drawRoom(Room *room);
-int createCorridor(Position *doorOne, Position *doorTwo);
 
 //Enemy functions
 int addEnemy(Level *level);

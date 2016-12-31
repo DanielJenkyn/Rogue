@@ -39,8 +39,6 @@ Room *createRoom(int grid) {
     newRoom->position.x += randRange(1,(29 - newRoom->width),0);
     newRoom->position.y += randRange(1,(10 - newRoom->height),0);
 
-
-
     newRoom->doors = malloc(sizeof(Position) * 4);
     
     //Top doors
@@ -92,54 +90,5 @@ int drawRoom(Room *room) {
     mvprintw(room->doors[2]->y,room->doors[2]->x, "+");
     mvprintw(room->doors[3]->y,room->doors[3]->x, "+");
     
-    return 1;
-}
-//This function is a cluster fuck. Will switch to A* / BFS
-int createCorridor(Position *doorOne, Position *doorTwo) {
-    Position tempDoorOne;
-    Position tempDoorTwo;
-
-    tempDoorOne.x = doorOne->x;
-    tempDoorOne.y = doorOne->y;
-    tempDoorTwo.x = doorTwo->x;
-    tempDoorTwo.y = doorTwo->y;
-
-    int xPosBetweenRoom = randRange(tempDoorOne.x+1,tempDoorTwo.x, 1);
-    int yPosBetweenRoom = randRange(tempDoorOne.y,tempDoorTwo.y, 0);
-
-    //Refactor - Will most l
-    //Draw Horizontal
-    for(int i = tempDoorOne.x; i < xPosBetweenRoom; i++) {
-        tempDoorOne.x++;
-        mvprintw(tempDoorOne.y, tempDoorOne.x, "#");
-    }
-    
-    for(int i = tempDoorTwo.x; i > xPosBetweenRoom; i--) {
-        tempDoorTwo.x--;
-        mvprintw(tempDoorTwo.y, tempDoorTwo.x, "#");
-    }
-
-    //Draw vertical
-    if(tempDoorOne.y > yPosBetweenRoom) {
-        //Draw up
-        for(int i = tempDoorOne.y; i > yPosBetweenRoom; i--) {
-            tempDoorOne.y--;
-            mvprintw(tempDoorOne.y,tempDoorOne.x,"#");
-        }
-        for(int i = tempDoorTwo.y; i < yPosBetweenRoom; i++) {
-            tempDoorTwo.y++;
-            mvprintw(tempDoorTwo.y,tempDoorTwo.x,"#");
-        }
-    } else {
-        //Draw down
-        for(int i = tempDoorOne.y; i < yPosBetweenRoom; i++) {
-            tempDoorOne.y++;
-            mvprintw(tempDoorOne.y,tempDoorOne.x,"#");
-        }
-        for(int i = tempDoorTwo.y; i > yPosBetweenRoom; i--) {
-            tempDoorTwo.y--;
-            mvprintw(tempDoorTwo.y,tempDoorTwo.x,"#");
-        }
-    }
     return 1;
 }

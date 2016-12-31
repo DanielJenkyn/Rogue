@@ -8,7 +8,6 @@ int main() {
     screenSetUp();
     level = createLevel(2);
     printStats(level);
-    
     //Main game loop
     while((ch = getch()) != 'q') {
         printStats(level);

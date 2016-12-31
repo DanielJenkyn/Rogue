@@ -30,7 +30,7 @@ Room **roomSetUp(int noOfRooms) {
         rooms[x] = createRoom(x);
         drawRoom(rooms[x]);
     }
-    
+    pathFind(rooms[0]->doors[3], rooms[1]->doors[1]);
     return rooms;
 }
 
