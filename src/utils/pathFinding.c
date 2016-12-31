@@ -4,6 +4,7 @@
 int pathFind(Position *start, Position *end) {
 	int i,j;
 	int y,x;
+	int tempY;
 	int **frontier = malloc(sizeof(int*)* MAX_HEIGHT * MAX_WIDTH);
 	int ***cameFrom = malloc(sizeof(int**) * MAX_HEIGHT);
 	int frontierIndex = 0;
@@ -45,8 +46,9 @@ int pathFind(Position *start, Position *end) {
 	x = end->x;
 
 	while((y != start->y) || (x != start->x)) {
-		y = cameFrom[y][x][0];
-		x = cameFrom[y][x][1];
+		tempY = y;
+		y = cameFrom[tempY][x][0];
+		x = cameFrom[tempY][x][1];
 		mvprintw(y, x, "+");
 		getch();
 	}
@@ -60,21 +62,21 @@ void addPositionYX(int **frontier, int frontierCount, int y, int x) {
 
 int addNeighbours(int **frontier, int frontierCount, int ***cameFrom, int y, int x) {
 	//North
-	if(y < 0 && cameFrom[y-1][x][0] <= 0) {
+	if(y < 0 && cameFrom[y-1][x][0] <= 0 && checkPosition(y-1, x)) {
 		addPositionYX(frontier, frontierCount, y-1, x);
 		cameFrom[y-1][x][0] = y;
 		cameFrom[y-1][x][1] = x;
 		frontierCount++;
 	}
 	//South
-	if(y < (MAX_HEIGHT-1) && cameFrom[y+1][x][0] <= 0) {
+	if(y < (MAX_HEIGHT-1) && cameFrom[y+1][x][0] <= 0 && checkPosition(y+1, x)) {
 		addPositionYX(frontier, frontierCount, y+1, x);
 		cameFrom[y+1][x][0] = y;
 		cameFrom[y+1][x][1] = x;
 		frontierCount++;
 	}
 	//East
-	if(x < (MAX_WIDTH-1) && cameFrom[y][x+1][0] <= 0) {
+	if(x < (MAX_WIDTH-1) && cameFrom[y][x+1][0] <= 0 && checkPosition(y, x+1)) {
 		addPositionYX(frontier, frontierCount, y, x+1);
 		cameFrom[y][x+1][0] = y;
 		cameFrom[y][x+1][1] = x;
@@ -82,11 +84,19 @@ int addNeighbours(int **frontier, int frontierCount, int ***cameFrom, int y, int
 	}
 	//West
 	if(x > 0 && cameFrom[y][x-1][0] <= 0) {
-		addPositionYX(frontier, frontierCount, y, x-1);
+		addPositionYX(frontier, frontierCount, y, x-1 && checkPosition(y, x-1));
 		cameFrom[y][x-1][0] = y;
 		cameFrom[y][x-1][1] = x;
 		frontierCount++;
 	}
 
 	return frontierCount;
+}
+
+int checkPosition(int y, int x) {
+	chat temp = mvinch(y, x);
+
+	if(temp == '.' || '|' || '-'|| '#') { return 0;}
+	else { return 1;}
+
 }
