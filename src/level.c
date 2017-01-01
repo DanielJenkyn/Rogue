@@ -4,7 +4,7 @@ Level *createLevel(int level) {
     Level *newLevel = malloc(sizeof(Level));
     newLevel->level = level;
     newLevel->noOfRooms = 6;
-    newLevel->rooms = roomSetUp(newLevel->noOfRooms);
+    newLevel->rooms = roomSetUp();
     
     //Save level after rooms are created!
     newLevel->tiles = saveLevelPositions();
@@ -16,7 +16,7 @@ Level *createLevel(int level) {
     return newLevel;
 }
 
-Room **roomSetUp(int noOfRooms) {
+Room **roomSetUp() {
 
     /*
      We need to dereference twice, access first address which happens to be a
@@ -24,10 +24,10 @@ Room **roomSetUp(int noOfRooms) {
      */
     Room **rooms;
     //Allocates no of bytes for object type Room * 6, enough for 6 rooms
-    rooms = malloc(sizeof(Room) * noOfRooms);
+    rooms = malloc(sizeof(Room) * 6);
 
-    for(int x = 0; x < noOfRooms; x++) {
-        rooms[x] = createRoom(x);
+    for(int x = 0; x < 6; x++) {
+        rooms[x] = createRoom(x, 4);
         drawRoom(rooms[x]);
     }
     pathFind(rooms[0]->doors[3], rooms[1]->doors[1]);
