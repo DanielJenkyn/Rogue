@@ -38,7 +38,7 @@ Room *createRoom(int grid, int noOfDoors) {
     
     //room x,y offset
     newRoom->position.x += randRange(1,(29 - newRoom->width),0);
-    newRoom->position.y += randRange(1,(10 - newRoom->height),0);
+    newRoom->position.y += randRange(1,(9 - newRoom->height),0);
 
     newRoom->doors = malloc(sizeof(Door *) * noOfDoors);
 

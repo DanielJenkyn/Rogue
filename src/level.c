@@ -5,7 +5,7 @@ Level *createLevel(int level) {
     newLevel->level = level;
     newLevel->noOfRooms = 6;
     newLevel->rooms = roomSetUp();
-    
+    connectDoors(newLevel);
     //Save level after rooms are created!
     newLevel->tiles = saveLevelPositions();
     newLevel->user = playerSetUp();
@@ -30,8 +30,39 @@ Room **roomSetUp() {
         rooms[x] = createRoom(x, 4);
         drawRoom(rooms[x]);
     }
-    pathFind(rooms[0]->doors[3], rooms[1]->doors[1]);
     return rooms;
+}
+
+void connectDoors(Level *level) {
+    int i,j;
+    int randRoom, randDoor;
+    int count;
+
+    for (i = 0; i < level->noOfRooms; i++) {
+        for (j = 0; j < level->rooms[i]->noOfDoors; j++) {
+            if (level->rooms[i]->doors[j]->connected == 1) {
+                continue;
+            }
+
+            count = 0;
+
+            while (count < 2) {
+                randRoom = randRange(0, level->noOfRooms, 1);
+                randDoor = randRange(0, level->rooms[randRoom]->noOfDoors, 1);
+
+                if (level->rooms[randRoom]->doors[randDoor]->connected == 1 || randRoom == i) {
+                    count++;
+                    continue;
+                }
+
+                pathFind(&level->rooms[randRoom]->doors[randDoor]->position, &level->rooms[i]->doors[j]->position);
+                
+                level->rooms[randRoom]->doors[randDoor]->connected = 1;
+                level->rooms[i]->doors[j]->connected = 1;
+                break;
+            }
+        }
+    }
 }
 
 char **saveLevelPositions() {

@@ -2,7 +2,6 @@
 
 int screenSetUp() {
     initscr();
-    printw("Hello World");
     noecho();
     refresh();
     srand(time(NULL));

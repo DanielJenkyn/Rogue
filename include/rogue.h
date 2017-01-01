@@ -8,11 +8,6 @@
 #include <time.h>
 
 /*******Struct defintions*******/
-typedef struct Position {
-    int x;
-    int y;
-}Position;
-
 typedef struct Level {
     int level;
     int noOfRooms;
@@ -22,6 +17,11 @@ typedef struct Level {
     char **tiles;
     struct Player *user;
 }Level;
+
+typedef struct Position {
+    int x;
+    int y;
+}Position;
 
 typedef struct Room {
     Position position;
@@ -79,6 +79,7 @@ int printStats(Level *level);
 //Level functions
 Level *createLevel(int level);
 Room **roomSetUp();
+void connectDoors(Level *level);
 char **saveLevelPositions();
 
 //Player functions
