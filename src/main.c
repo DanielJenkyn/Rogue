@@ -8,6 +8,7 @@ int main() {
     screenSetUp();
     level = createLevel(2);
     printStats(level);
+    
     //Main game loop
     while((ch = getch()) != 'q') {
         printStats(level);
@@ -21,10 +22,7 @@ int main() {
 }
 
 //Todo: readup on this function
-int randRange(int min, int max, int exclusive) {
-    if(exclusive) {
-        max -= 1;
-    }
+int randRange(int min, int max) {
     int diff = max-min;
     return (int) (((double)(diff+1)/RAND_MAX) * rand() + min);
 }

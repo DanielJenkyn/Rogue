@@ -70,7 +70,7 @@ static const int MAX_HEIGHT = 25;
 static const int MAX_WIDTH = 100;
 
 //Main functions
-int randRange(int min, int max, int exclusive);
+int randRange(int min, int max);
 
 //Screen functions
 int screenSetUp();

@@ -1,7 +1,7 @@
 #include "rogue.h"
 #include "utils.h"
 
-int pathFind(Position *start, Position *end) {
+void pathFind(Position *start, Position *end) {
 	int i,j;
 	int y,x;
 	int tempY;
@@ -30,7 +30,7 @@ int pathFind(Position *start, Position *end) {
 	addPositionYX(frontier, frontierCount, start->y, start->x);
 	frontierCount++;
 
-	while(frontierIndex<frontierCount) {
+	while(frontierIndex < frontierCount) {
 		y = frontier[frontierIndex][0];
 		x = frontier[frontierIndex][1];
 		frontierIndex++;
@@ -51,7 +51,6 @@ int pathFind(Position *start, Position *end) {
 		x = cameFrom[tempY][x][1];
 		mvprintw(y, x, "#");
 	}
-	return 1;
 }
 
 void addPositionYX(int **frontier, int frontierCount, int y, int x) {
@@ -61,32 +60,32 @@ void addPositionYX(int **frontier, int frontierCount, int y, int x) {
 
 int addNeighbours(int **frontier, int frontierCount, int ***cameFrom, int y, int x) {
 	//North
-	if(y > 0 && cameFrom[y-1][x][0] < 0 && checkPos(y-1, x)) {
-		addPositionYX(frontier, frontierCount, y-1, x);
-		cameFrom[y-1][x][0] = y;
-		cameFrom[y-1][x][1] = x;
+	if(y > 0 && cameFrom[y - 1][x][0] < 0 && checkPos(y - 1, x)) {
+		addPositionYX(frontier, frontierCount, y - 1, x);
 		frontierCount++;
+		cameFrom[y - 1][x][0] = y;
+		cameFrom[y - 1][x][1] = x;
 	}
 	//South
-	if(y < (MAX_HEIGHT-1) && cameFrom[y+1][x][0] < 0 && checkPos(y+1, x)) {
+	if(y < (MAX_HEIGHT - 1) && cameFrom[y + 1][x][0] < 0 && checkPos(y + 1, x)) {
 		addPositionYX(frontier, frontierCount, y+1, x);
-		cameFrom[y+1][x][0] = y;
-		cameFrom[y+1][x][1] = x;
 		frontierCount++;
+		cameFrom[y + 1][x][0] = y;
+		cameFrom[y + 1][x][1] = x;
 	}
 	//East
-	if(x < (MAX_WIDTH-1) && cameFrom[y][x+1][0] < 0 && checkPos(y, x+1)) {
-		addPositionYX(frontier, frontierCount, y, x+1);
-		cameFrom[y][x+1][0] = y;
-		cameFrom[y][x+1][1] = x;
-		frontierCount++;
+	if(x < (MAX_WIDTH - 1) && cameFrom[y][x + 1][0] < 0 && checkPos(y, x + 1)) {
+		addPositionYX(frontier, frontierCount, y, x + 1);
+			frontierCount++;
+		cameFrom[y][x + 1][0] = y;
+		cameFrom[y][x + 1][1] = x;
 	}
 	//West
-	if(x > 0 && cameFrom[y][x-1][0] < 0 && checkPos(y, x-1)) {
-		addPositionYX(frontier, frontierCount, y, x-1);
-		cameFrom[y][x-1][0] = y;
-		cameFrom[y][x-1][1] = x;
+	if(x > 0 && cameFrom[y][x - 1][0] < 0 && checkPos(y, x - 1)) {
+		addPositionYX(frontier, frontierCount, y, x - 1);
 		frontierCount++;
+		cameFrom[y][x - 1][0] = y;
+		cameFrom[y][x - 1][1] = x;
 	}
 	return frontierCount;
 }
@@ -94,8 +93,9 @@ int addNeighbours(int **frontier, int frontierCount, int ***cameFrom, int y, int
 int checkPos(int y, int x) {
     char temp = mvinch(y, x);
 
-    if (temp == '.' || temp == '|' || temp == '-')
-        return 0;
-    else
-        return 1;
+    if (temp == '.' || temp == '|' || temp == '-') {
+    	return 0;
+    } else {
+    	return 1;
+    }
 }

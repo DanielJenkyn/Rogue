@@ -33,7 +33,7 @@ int addEnemy(Level *level) {
 
 	for(int x = 0; x<level->noOfRooms;x++) {
 		//50% spawn rate
-		if((randRange(0,9,0) !=  (0|1|2|3))) {
+		if((randRange(0,9) !=  (0|1|2|3))) {
 			level->enemies[level->noOfEnemies] = selectEnemy(level->level);
 			setStartPos(level->enemies[level->noOfEnemies],level->rooms[x]);
 			level->noOfEnemies++;
@@ -50,11 +50,11 @@ Enemy *selectEnemy(int level) {
 			break;
 		case 2:
 		case 3:
-			monster = randRange(0,1,0);
+			monster = randRange(0,1);
 			break;
 		case 4:
 		case 5:
-			monster = randRange(1,2,0);
+			monster = randRange(1,2);
 			break;
 		case 6:
 			monster = 2;
@@ -100,8 +100,8 @@ int killEnemy(Enemy *enemy) {
 }
 
 int setStartPos(Enemy *enemy, Room *room) {
-	enemy->position->y = randRange(room->position.y + 1, room->position.y + room->height - 2, 0);
-	enemy->position->x = randRange(room->position.x + 1, room->position.x + room->width - 2, 0);
+	enemy->position->y = randRange(room->position.y + 1, room->position.y + room->height - 2);
+	enemy->position->x = randRange(room->position.x + 1, room->position.x + room->width - 2);
 
 	mvprintw(enemy->position->y, enemy->position->x,enemy->string);
 	return 0;
@@ -137,7 +137,7 @@ int pathfindingSeek(Position *start, Position *destination) {
 }
 
 int pathfindingRandom(Position *position) {
-	int random = randRange(0,5,1);
+	int random = randRange(0,4);
 
 	switch(random) {
 		case 0:

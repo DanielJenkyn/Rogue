@@ -33,12 +33,12 @@ Room *createRoom(int grid, int noOfDoors) {
             break;
     }
 
-    newRoom->height = randRange(3,10,0);
-    newRoom->width = randRange(3,16,0);
+    newRoom->height = randRange(4,9);
+    newRoom->width = randRange(4,17);
     
     //room x,y offset
-    newRoom->position.x += randRange(1,(29 - newRoom->width),0);
-    newRoom->position.y += randRange(1,(9 - newRoom->height),0);
+    newRoom->position.x += randRange(1,(30 - newRoom->width));
+    newRoom->position.y += randRange(1,(10 - newRoom->height));
 
     newRoom->doors = malloc(sizeof(Door *) * noOfDoors);
 
@@ -48,17 +48,17 @@ Room *createRoom(int grid, int noOfDoors) {
     }
     
     //Top doors
-    newRoom->doors[0]->position.x = randRange(newRoom->position.x+1, newRoom->position.x + newRoom->width-2, 0);
+    newRoom->doors[0]->position.x = randRange(newRoom->position.x+1, newRoom->position.x + newRoom->width-2);
     newRoom->doors[0]->position.y = newRoom->position.y;
     //Left sideposition.
     newRoom->doors[1]->position.x = newRoom->position.x;
-    newRoom->doors[1]->position.y = randRange(newRoom->position.y+1, newRoom->position.y + newRoom->height-2, 0);
+    newRoom->doors[1]->position.y = randRange(newRoom->position.y+1, newRoom->position.y + newRoom->height-2);
     //Bottom doorsposition.
-    newRoom->doors[2]->position.x = randRange(newRoom->position.x+1, newRoom->position.x + newRoom->width-2, 0);
+    newRoom->doors[2]->position.x = randRange(newRoom->position.x+1, newRoom->position.x + newRoom->width-2);
     newRoom->doors[2]->position.y = newRoom->position.y + newRoom->height-1;
     //Right sideposition.
     newRoom->doors[3]->position.x = newRoom->position.x + newRoom->width-1;
-    newRoom->doors[3]->position.y = randRange(newRoom->position.y+1, newRoom->position.y + newRoom->height-2, 0);
+    newRoom->doors[3]->position.y = randRange(newRoom->position.y+1, newRoom->position.y + newRoom->height-2);
     
     return newRoom;
 }

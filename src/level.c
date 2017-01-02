@@ -1,13 +1,15 @@
 #include "rogue.h"
 
 Level *createLevel(int level) {
-    Level *newLevel = malloc(sizeof(Level));
+    Level *newLevel;
+    newLevel = malloc(sizeof(Level));
+
     newLevel->level = level;
     newLevel->noOfRooms = 6;
     newLevel->rooms = roomSetUp();
     connectDoors(newLevel);
-    //Save level after rooms are created!
     newLevel->tiles = saveLevelPositions();
+
     newLevel->user = playerSetUp();
     spawnPlayer(newLevel->rooms, newLevel->user);
 
@@ -47,8 +49,8 @@ void connectDoors(Level *level) {
             count = 0;
 
             while (count < 2) {
-                randRoom = randRange(0, level->noOfRooms, 1);
-                randDoor = randRange(0, level->rooms[randRoom]->noOfDoors, 1);
+                randRoom = randRange(0, level->noOfRooms - 1);
+                randDoor = randRange(0, level->rooms[randRoom]->noOfDoors -1);
 
                 if (level->rooms[randRoom]->doors[randDoor]->connected == 1 || randRoom == i) {
                     count++;
@@ -66,7 +68,7 @@ void connectDoors(Level *level) {
 }
 
 char **saveLevelPositions() {
-    int x, y;
+    int x,y;
     char **positions;
     positions = malloc(sizeof(char *) * MAX_HEIGHT);
     

@@ -10,7 +10,7 @@ SOURCES = $(SRCDIR)*.c\
 all: rogue
 
 rogue: $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS) -o $@
+	$(CC) $(SOURCES) $(CFLAGS) -g -o $@
 
 run:
 	./rogue
