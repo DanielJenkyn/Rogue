@@ -91,7 +91,7 @@ int addNeighbours(int **frontier, int frontierCount, int ***cameFrom, int y, int
 }
 
 int checkPos(int y, int x) {
-    char temp = mvinch(y, x);
+    unsigned int temp = mvinch(y, x);
 
     if (temp == '.' || temp == '|' || temp == '-') {
     	return 0;

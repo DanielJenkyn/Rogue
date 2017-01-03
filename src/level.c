@@ -1,4 +1,5 @@
 #include "rogue.h"
+#include "utils.h"
 
 Level *createLevel(int level) {
     Level *newLevel;
@@ -75,7 +76,7 @@ char **saveLevelPositions() {
     for(y = 0; y < MAX_HEIGHT; y++) {
         positions[y] = malloc(sizeof(char) * MAX_WIDTH);
         for(x = 0; x < MAX_WIDTH; x++) {
-            positions[y][x] = mvinch(y,x);
+            positions[y][x] = (char)mvinch(y,x);
         }
     } 
     return positions;
