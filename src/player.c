@@ -19,7 +19,7 @@ int spawnPlayer(Room **rooms, Player *user) {
     user->position->y = rooms[3]->position.y+1;
     mvprintw(user->position->y, user->position->x, "@");
     move(user->position->y, user->position->x);
-    return 1;
+    return 0;
 }
 
 Position *handleInput(int input, Player *user) {

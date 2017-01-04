@@ -6,7 +6,7 @@ int screenSetUp() {
     refresh();
     srand(time(NULL));
     
-    return 1;
+    return 0;
 }
 
 int printStats(Level *level) {
@@ -16,5 +16,5 @@ int printStats(Level *level) {
 	printw("    Exp: %d", level->user->exp);
     printw("    ");
 
-	return 1;
+	return 0;
 }

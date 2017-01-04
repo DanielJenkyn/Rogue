@@ -19,5 +19,5 @@ int combat(Player *player, Enemy *enemy, int order) {
 			enemy->health -= player->attack;
 		}
 	}
-	return 1;
+	return 0;
 }

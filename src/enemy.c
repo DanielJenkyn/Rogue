@@ -133,7 +133,7 @@ int pathfindingSeek(Position *start, Position *destination) {
  	}else if((abs((start->y - 1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y - 1,start->x) == '.')) {
 		start->y = start->y - 1;
 	}
-	return 1;
+	return 0;
 }
 
 int pathfindingRandom(Position *position) {
@@ -155,7 +155,7 @@ int pathfindingRandom(Position *position) {
 		case 4:
 			break;
 	}
-	return 1;
+	return 0;
 }
 
 Enemy *getEnemyAt(Position *position, Enemy **enemies) {

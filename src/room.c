@@ -88,5 +88,5 @@ int drawRoom(Room *room) {
     mvprintw(room->doors[1]->position.y, room->doors[1]->position.x, "+");
     mvprintw(room->doors[2]->position.y, room->doors[2]->position.x, "+");
     mvprintw(room->doors[3]->position.y, room->doors[3]->position.x, "+");
-    return 1;
+    return 0;
 }
