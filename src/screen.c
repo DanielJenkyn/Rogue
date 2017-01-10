@@ -1,8 +1,12 @@
 #include "rogue.h"
 
 int screenSetUp() {
-    initscr();
+    if(!initscr()) {
+        printf("Error initializing screen.\n");
+        exit(1);
+    }
     noecho();
+    keypad(stdscr, TRUE);
     refresh();
     srand(time(NULL));
     
