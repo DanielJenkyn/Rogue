@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
+#include <stdbool.h>
 
 /*******Struct defintions*******/
 typedef struct Level {

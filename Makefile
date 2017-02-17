@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 CFLAGS = -lmenu -lncurses -I$(IDIR)
 
 IDIR = ./include/
@@ -11,7 +11,7 @@ SOURCES = $(SRCDIR)*.c\
 all: rogue
 
 rogue: $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS) -g -o $@.out
+	$(CC) $(SOURCES) $(CFLAGS) -o $@.out
 
 run:
 	./rogue.out

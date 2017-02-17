@@ -7,6 +7,8 @@ int gameLoop() {
     Level *level;
     level = createLevel(2);
     printStats(level);
+    //Return cursor to player pos
+    move(level->user->position->y,level->user->position->x);
     
     //Main game loop
     while((ch = getch()) != 'q') {
@@ -25,18 +27,23 @@ int gameLoop() {
 
 void menuLoop() {
     int choice;
-    char *choices[] = {"Start Game","End Game"};
-    while(true) {
-        choice = mainMenu(2, choices);
+    char *choices[] = {"Start Game","Options","End Game"};
+    bool menuFlag = true;
+    while(menuFlag) {
+        choice = mainMenu(3, choices);
 
         switch(choice) {
             case START_GAME:
                 gameLoop();
                 clear();
                 break;
+            //Todo: Options menu
+            case OPTIONS_MENU:
+                break;
             case QUIT_GAME:
                 return;
-                break;
+            default:
+                return;
         }
     }
 }
@@ -48,7 +55,7 @@ int main() {
     return 0;
 }
 
-//Todo: readup on this function
+//Todo: Make more readable
 int randRange(int min, int max) {
     int diff = max-min;
     return (int) (((double)(diff+1)/RAND_MAX) * rand() + min);

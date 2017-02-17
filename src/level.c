@@ -13,7 +13,6 @@ Level *createLevel(int level) {
 
     newLevel->user = playerSetUp();
     spawnPlayer(newLevel->rooms, newLevel->user);
-
     addEnemy(newLevel);
 
     return newLevel;
@@ -49,6 +48,7 @@ void connectDoors(Level *level) {
 
             count = 0;
 
+            //Try twice to connect doors
             while (count < 2) {
                 randRoom = randRange(0, level->noOfRooms - 1);
                 randDoor = randRange(0, level->rooms[randRoom]->noOfDoors -1);
