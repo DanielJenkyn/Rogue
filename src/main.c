@@ -2,25 +2,25 @@
 #include "mainMenu.h"
 
 int gameLoop() {
-    int ch;
+    int ch = '\0';
     Position *newPosition;
     Level *level;
-    level = createLevel(2);
-    printStats(level);
-    //Return cursor to player pos
-    move(level->user->position->y,level->user->position->x);
+    level = createLevel(1);
     
     //Main game loop
-    while((ch = getch()) != 'q') {
-        printStats(level);
+    while(ch != 'q') {
         newPosition = handleInput(ch, level->user);
         checkPosition(newPosition, level);
         moveEnemy(level);
-        move(level->user->position->y,level->user->position->x);
+
+        clear();
+        printStats(level);
+        drawLevel(level);
 
         if(level->user->health <= 0) {
             return -1;
         }
+        ch = getch();
     }
     return 0;
 }

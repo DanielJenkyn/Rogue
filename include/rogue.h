@@ -79,6 +79,7 @@ int printStats(Level *level);
 
 //Level functions
 Level *createLevel(int level);
+void drawLevel(Level *level);
 Room **roomSetUp();
 void connectDoors(Level *level);
 char **saveLevelPositions();
@@ -89,6 +90,7 @@ int spawnPlayer(Room **rooms, Player *user);
 Position *handleInput(int input, Player *user);
 int checkPosition(Position *newPosition, Level *level);
 int playerMove(Position *newPosition, Player *user, char **level);
+void drawPlayer(Player *player);
 
 //Room functions
 Room *createRoom(int grid, int noOfDoors);
@@ -101,6 +103,7 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 int killEnemy(Enemy *enemy);
 int setStartPos(Enemy *enemy, Room *room);
 int moveEnemy(Level *level);
+void drawEnemy(Enemy *enemy);
 int pathfindingSeek(Position *start, Position *destination);
 int pathfindingRandom(Position *position);
 Enemy *getEnemyAt(Position *position, Enemy **enemies);

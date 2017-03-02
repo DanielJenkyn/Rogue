@@ -17,7 +17,6 @@ Player *playerSetUp() {
 int spawnPlayer(Room **rooms, Player *user) {
     user->position->x = rooms[3]->position.x+1;
     user->position->y = rooms[3]->position.y+1;
-    mvprintw(user->position->y, user->position->x, "@");
     move(user->position->y, user->position->x);
     return 0;
 }
@@ -65,7 +64,6 @@ int checkPosition(Position *newPosition, Level *level) {
         case 'T':
             combat(user, getEnemyAt(newPosition, level->enemies), 0);
         default:
-            move(user->position->y, user->position->x);
             break;
     }
 
@@ -73,19 +71,14 @@ int checkPosition(Position *newPosition, Level *level) {
 }
 
 int playerMove(Position *newPosition, Player *user, char **level) {
-    char buffer[8];
-
-    sprintf(buffer,"%c", level[user->position->y][user->position->x]);
-    //Remove old position
-    mvprintw(user->position->y, user->position->x, buffer);
     //Update player position
     user->position->y = newPosition->y;
     user->position->x = newPosition->x;
-    //Draw player to new position
-    mvprintw(user->position->y, user->position->x, "@");
-    
-    //ncurses moves cursor right after pritning, so this moves it back
-    move(user->position->y, user->position->x);
 
     return 0;
+}
+
+void drawPlayer(Player *player) {
+    mvprintw(player->position->y, player->position->x, "@");
+    move(player->position->y, player->position->x);
 }

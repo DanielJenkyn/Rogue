@@ -18,8 +18,26 @@ Level *createLevel(int level) {
     return newLevel;
 }
 
-Room **roomSetUp() {
+void drawLevel(Level *level) {
+    int x,y,i;
 
+    //Draw tiles
+    for(y = 0; y < MAX_HEIGHT; y++) {
+        for(x = 0; x < MAX_WIDTH; x++) {
+            mvaddch(y, x, level->tiles[y][x]);
+        }
+    }
+
+    //Draw enemies
+    for(i = 0; i < level->noOfEnemies; i++) {
+        drawEnemy(level->enemies[i]);
+    }
+
+    //Draw player
+    drawPlayer(level->user);
+}
+
+Room **roomSetUp() {
     /*
      We need to dereference twice, access first address which happens to be a
      pointer then deference that pointer.
