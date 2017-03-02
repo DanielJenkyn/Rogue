@@ -94,7 +94,6 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 }
 
 int killEnemy(Enemy *enemy) {
-	mvprintw(enemy->position->y, enemy->position->x,".");
 	enemy->alive = 0;
 	return 1;
 }
@@ -103,7 +102,6 @@ int setStartPos(Enemy *enemy, Room *room) {
 	enemy->position->y = randRange(room->position.y + 1, room->position.y + room->height - 2);
 	enemy->position->x = randRange(room->position.x + 1, room->position.x + room->width - 2);
 
-	mvprintw(enemy->position->y, enemy->position->x,enemy->string);
 	return 0;
 }
 
@@ -111,16 +109,20 @@ int moveEnemy(Level *level) {
 	for(int x = 0; x<level->noOfEnemies;x++) {
 		if(level->enemies[x]->alive == 0) 
 			continue;
-		mvprintw(level->enemies[x]->position->y,level->enemies[x]->position->x, ".");
 		if(level->enemies[x]->pathfinding == 1) {
 			pathfindingSeek(level->enemies[x]->position, level->user->position);
 		} else {
 			//Default to random movement
 			pathfindingRandom(level->enemies[x]->position);
 		}
-		mvprintw(level->enemies[x]->position->y,level->enemies[x]->position->x, level->enemies[x]->string);
 	}
 	return 0;
+}
+
+void drawEnemy(Enemy *enemy) {
+	if(enemy->alive) {
+		mvprintw(enemy->position->y, enemy->position->x, enemy->string);
+	}
 }
 
 int pathfindingSeek(Position *start, Position *destination) {
