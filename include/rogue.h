@@ -9,6 +9,12 @@
 #include <stdbool.h>
 
 /*******Struct defintions*******/
+typedef struct Game {
+    struct Level *levels[10];
+    int currentLevel;
+    
+}Game;
+
 typedef struct Level {
     int level;
     int noOfRooms;
@@ -72,6 +78,10 @@ static const int MAX_WIDTH = 100;
 
 //Main functions
 int randRange(int min, int max);
+
+//Game functions
+void render(Game *game);
+int gameLoop(Game *game);
 
 //Screen functions
 int screenSetUp();
