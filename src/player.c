@@ -5,11 +5,15 @@ Player *playerSetUp() {
     newPlayer = malloc(sizeof(Player));
     newPlayer->position = malloc(sizeof(Position));
     
+    newPlayer->symbol = '@';
     newPlayer->health = 20;
     newPlayer->maxHealth = 20;
     newPlayer->attack = 1;
     newPlayer->gold = 0;
     newPlayer->exp = 0;
+
+    //Create string output from formatted data
+    sprintf(newPlayer->string, "%c", newPlayer->symbol);
     
     return newPlayer;
 }
@@ -79,6 +83,6 @@ int playerMove(Position *newPosition, Player *user, char **level) {
 }
 
 void drawPlayer(Player *player) {
-    mvprintw(player->position->y, player->position->x, "@");
+    mvprintw(player->position->y, player->position->x, player->string);
     move(player->position->y, player->position->x);
 }

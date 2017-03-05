@@ -86,6 +86,7 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 	newEnemy->pathfinding = pathfinding;
 	newEnemy->alive = 1;
 
+	//Create string output from formatted data
 	sprintf(newEnemy->string, "%c", symbol);
 
 	newEnemy->position = malloc(sizeof(Position));
