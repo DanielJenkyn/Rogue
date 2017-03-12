@@ -4,7 +4,7 @@
 
 ### Addtional levels
 - [x] Rewrite how levels are stored so they are persistant - New struct. (See c7a4ff4641b2ae4e48f9a039e69a0d1f743a7826)
-- [x] Connected levels - Stairs/doors.
+- [ ] Connected levels - Stairs/doors.
 - [ ] Generate new levels
 
 ### Inventory System
