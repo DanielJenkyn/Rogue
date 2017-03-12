@@ -3,7 +3,7 @@
 ## Major Features
 
 ### Addtional levels
-- [x] Rewrite how levels are stored so they are persistant - New struct. (See c7a4ff4641b2ae4e48f9a039e69a0d1f743a7826)
+- [x] Rewrite how levels are stored so they are persistant - New struct. (See https://github.com/DanielJenkyn/Rogue/commit/613f32a05869772d3f49eea11f9e15a7e839f5fb)
 - [ ] Connected levels - Stairs/doors.
 - [ ] Generate new levels
 
