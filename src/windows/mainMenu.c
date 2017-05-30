@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "mainMenu.h"
 
 int mainMenu(int numberItems, char *choices[]) {

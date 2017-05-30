@@ -1,4 +1,5 @@
 #include "rogue.h"
+#include "level.h"
 #include "utils.h"
 
 Level *createLevel(int level) {
@@ -98,4 +99,52 @@ char **saveLevelPositions() {
         }
     } 
     return positions;
+}
+
+//Check what is at new position
+void checkPosition(Position *newPosition, Level *level) {
+    //mvinch - move cursor to new pos, return char at pos
+    Player *user;
+    user = level->user;
+    switch(mvinch(newPosition->y, newPosition->x)) {
+        case '.':
+        case '+':
+        case '#':
+            playerMove(newPosition, user, level->tiles);
+            break;
+        case 'X':
+        case 'G':
+        case 'T':
+            combat(user, getEnemyAt(newPosition, level->enemies), 0);
+        default:
+            break;
+    }
+}
+
+void addEnemy(Level *level) {
+    //Max on enemy per room, and 6 rooms (Will probably change)
+    level->enemies = malloc(sizeof(Enemy *) * 6);
+    level->noOfEnemies = 0;
+
+    for(int x = 0; x<level->noOfRooms;x++) {
+        //50% spawn rate
+        if((randRange(0,9) !=  (0|1|2|3))) {
+            level->enemies[level->noOfEnemies] = selectEnemy(level->level);
+            setStartPos(level->enemies[level->noOfEnemies],level->rooms[x]);
+            level->noOfEnemies++;
+        }
+    }
+}
+
+void moveEnemy(Level *level) {
+    for(int x = 0; x<level->noOfEnemies;x++) {
+        if(level->enemies[x]->alive == 0) 
+            continue;
+        if(level->enemies[x]->pathfinding == 1) {
+            pathfindingSeek(level->enemies[x]->position, level->user->position);
+        } else {
+            //Default to random movement
+            pathfindingRandom(level->enemies[x]->position);
+        }
+    }
 }

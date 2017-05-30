@@ -1,5 +1,7 @@
 #include "rogue.h"
 #include "mainMenu.h"
+#include "game.h"
+#include "utils.h"
 
 void menuLoop() {
     int choice;
@@ -34,7 +36,7 @@ int main() {
     return 0;
 }
 
-//Todo: Make more readable
+//Todo: Make more readable & Move
 int randRange(int min, int max) {
     int diff = max-min;
     return (int) (((double)(diff+1)/RAND_MAX) * rand() + min);

@@ -1,4 +1,5 @@
 #include "rogue.h"
+#include "room.h"
 
 Room *createRoom(int grid, int noOfDoors) {
     
@@ -89,4 +90,15 @@ int drawRoom(Room *room) {
     mvprintw(room->doors[2]->position.y, room->doors[2]->position.x, "+");
     mvprintw(room->doors[3]->position.y, room->doors[3]->position.x, "+");
     return 0;
+}
+
+void spawnPlayer(Room **rooms, Player *user) {
+    user->position->x = rooms[3]->position.x+1;
+    user->position->y = rooms[3]->position.y+1;
+    move(user->position->y, user->position->x);
+}
+
+void setStartPos(Enemy *enemy, Room *room) {
+    enemy->position->y = randRange(room->position.y + 1, room->position.y + room->height - 2);
+    enemy->position->x = randRange(room->position.x + 1, room->position.x + room->width - 2);
 }

@@ -1,4 +1,6 @@
 #include "rogue.h"
+#include "enemy.h"
+
 /*
 0 Spider: 
 	levels: 1-3
@@ -26,44 +28,28 @@
 	pathfinding: 1
 */
 
-int addEnemy(Level *level) {
-	//Max on enemy per room, and 6 rooms (Will probably change)
-	level->enemies = malloc(sizeof(Enemy *) * 6);
-	level->noOfEnemies = 0;
-
-	for(int x = 0; x<level->noOfRooms;x++) {
-		//50% spawn rate
-		if((randRange(0,9) !=  (0|1|2|3))) {
-			level->enemies[level->noOfEnemies] = selectEnemy(level->level);
-			setStartPos(level->enemies[level->noOfEnemies],level->rooms[x]);
-			level->noOfEnemies++;
-		}
-	}
-	return 0;
-}
-
 Enemy *selectEnemy(int level) {
-	int monster;
+	int enemy;
 	switch(level) {
 		case 1:
-			monster = 0;
+			enemy = 0;
 			break;
 		case 2:
 		case 3:
-			monster = randRange(0,1);
+			enemy = randRange(0,1);
 			break;
 		case 4:
 		case 5:
-			monster = randRange(1,2);
+			enemy = randRange(1,2);
 			break;
 		case 6:
-			monster = 2;
+			enemy = 2;
 			break;
 		default:
-			monster = 0;
+			enemy = 0;
 	}
 
-	switch(monster) {
+	switch(enemy) {
 		case 0://Spider
 			return createEnemy('X',2,1,1,2,0);
 		case 1://Goblin
@@ -94,30 +80,8 @@ Enemy *createEnemy(char symbol, int health, int attack, int defence, int speed, 
 	return newEnemy;
 }
 
-int killEnemy(Enemy *enemy) {
+void killEnemy(Enemy *enemy) {
 	enemy->alive = 0;
-	return 1;
-}
-
-int setStartPos(Enemy *enemy, Room *room) {
-	enemy->position->y = randRange(room->position.y + 1, room->position.y + room->height - 2);
-	enemy->position->x = randRange(room->position.x + 1, room->position.x + room->width - 2);
-
-	return 0;
-}
-
-int moveEnemy(Level *level) {
-	for(int x = 0; x<level->noOfEnemies;x++) {
-		if(level->enemies[x]->alive == 0) 
-			continue;
-		if(level->enemies[x]->pathfinding == 1) {
-			pathfindingSeek(level->enemies[x]->position, level->user->position);
-		} else {
-			//Default to random movement
-			pathfindingRandom(level->enemies[x]->position);
-		}
-	}
-	return 0;
 }
 
 void drawEnemy(Enemy *enemy) {
@@ -126,7 +90,7 @@ void drawEnemy(Enemy *enemy) {
 	}
 }
 
-int pathfindingSeek(Position *start, Position *destination) {
+void pathfindingSeek(Position *start, Position *destination) {
 	if((abs((start->x - 1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y,start->x - 1) == '.')) {
 		start->x = start->x - 1;
 	}else if((abs((start->x + 1) - destination->x) < abs(start->x - destination->x)) && (mvinch(start->y,start->x + 1) == '.')) {
@@ -136,10 +100,9 @@ int pathfindingSeek(Position *start, Position *destination) {
  	}else if((abs((start->y - 1) - destination->y) < abs(start->y - destination->y)) && (mvinch(start->y - 1,start->x) == '.')) {
 		start->y = start->y - 1;
 	}
-	return 0;
 }
 
-int pathfindingRandom(Position *position) {
+void pathfindingRandom(Position *position) {
 	int random = randRange(0,4);
 
 	switch(random) {
@@ -158,7 +121,6 @@ int pathfindingRandom(Position *position) {
 		case 4:
 			break;
 	}
-	return 0;
 }
 
 Enemy *getEnemyAt(Position *position, Enemy **enemies) {
