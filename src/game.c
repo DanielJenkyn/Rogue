@@ -1,4 +1,7 @@
 #include "rogue.h"
+#include "game.h"
+#include "level.h"
+#include "utils.h"
 
 void render(Game *game) {
 	clear();
@@ -6,7 +9,7 @@ void render(Game *game) {
 	drawLevel(game->levels[game->currentLevel - 1]);
 }
 
-int gameLoop(Game *game) {
+void gameLoop(Game *game) {
     int ch = '\0';
     Position *newPosition;
     Level *level;
@@ -27,9 +30,8 @@ int gameLoop(Game *game) {
         render(game);
 
         if(level->user->health <= 0) {
-            return -1;
+            return;
         }
         ch = getch();
     }
-    return 0;
 }
