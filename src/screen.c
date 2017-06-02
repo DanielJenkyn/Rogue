@@ -19,3 +19,11 @@ void printStats(Level *level) {
 	printw("    Exp: %d", level->user->exp);
     printw("    ");
 }
+
+void printInventory(Player *player) {
+    mvprintw(26, 0, "    Inventory: ");
+
+    for(int i = 0; i < player->numberOfItems; i++){
+        printw(player->items[i]->string);
+    }
+}
