@@ -2,9 +2,11 @@
 #include "player.h"
 
 Player *playerSetUp() {
+    MAX_ITEMS = 25;
     Player *newPlayer;
     newPlayer = malloc(sizeof(Player));
     newPlayer->position = malloc(sizeof(Position));
+    newPlayer->items = malloc(sizeof(Item*));
     
     newPlayer->symbol = '@';
     newPlayer->health = 20;
@@ -12,6 +14,11 @@ Player *playerSetUp() {
     newPlayer->attack = 1;
     newPlayer->gold = 0;
     newPlayer->exp = 0;
+    newPlayer->numberOfItems = 0;
+
+    //Give player weapon
+    newPlayer->items[newPlayer->numberOfItems] = createSword(1,20);
+    newPlayer->numberOfItems++;
 
     //Create string output from formatted data
     sprintf(newPlayer->string, "%c", newPlayer->symbol);

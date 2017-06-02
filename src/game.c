@@ -11,6 +11,7 @@ void render(Game *game) {
 
 void gameLoop(Game *game) {
     int ch = '\0';
+    ch = tolower(ch);
     Position *newPosition;
     Level *level;
 
@@ -22,15 +23,25 @@ void gameLoop(Game *game) {
     level = game->levels[game->currentLevel - 1];
 
     //Main game loop
-    while(ch != 'q') {
-        newPosition = handleInput(ch, level->user);
-        checkPosition(newPosition, level);
-        moveEnemy(level);
+    bool isRunning = true;
+    while(isRunning) {
 
-        render(game);
+        if(ch == 'q') {
+            break;
+        }
 
-        if(level->user->health <= 0) {
-            return;
+        if(ch == 'i') {
+            printInventory(level->user);
+        }else {
+            newPosition = handleInput(ch, level->user);
+            checkPosition(newPosition, level);
+            moveEnemy(level);
+
+            render(game);
+
+            if(level->user->health <= 0) {
+                return;
+            }
         }
         ch = getch();
     }

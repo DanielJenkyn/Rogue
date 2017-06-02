@@ -14,6 +14,7 @@ int checkPos(int y, int x);
 //Screen functions
 void screenSetUp();
 void printStats(Level *level);
+void printInventory(Player *player);
 
 //Combat functions
 void combat(Player *player, Enemy *enemy, int order);

@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include <time.h>
 #include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
 /*******Global vars*******/
 static const int MAX_HEIGHT = 25;
